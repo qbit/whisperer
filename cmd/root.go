@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"bufio"
+	"bytes"
+	_ "embed"
 	"fmt"
 	"io"
 	"log"
@@ -11,10 +13,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/danielkvist/whisperer/client"
-
+	"github.com/qbit/whisperer/client"
 	"github.com/spf13/cobra"
 )
+
+//go:embed urls.txt
+var builtinURLs []byte
 
 func Root() *cobra.Command {
 	var debug bool
@@ -35,11 +39,16 @@ func Root() *cobra.Command {
 				return fmt.Errorf("number of goroutines cannot be less or equal to 0")
 			}
 
-			f, err := os.Open(urls)
-			if err != nil {
-				return err
+			var f io.Reader
+			var err error
+			if urls != "" {
+				f, err = os.Open(urls)
+				if err != nil {
+					return err
+				}
+			} else {
+				f = bytes.NewReader(builtinURLs)
 			}
-			defer f.Close()
 
 			sites, err := readURLS(f)
 			if err != nil {
@@ -77,7 +86,7 @@ func Root() *cobra.Command {
 	root.Flags().StringVarP(&proxy, "proxy", "p", "", "proxy URL")
 	root.Flags().BoolVarP(&rDelay, "random", "r", false, "random delay between requests")
 	root.Flags().DurationVarP(&timeout, "timeout", "t", 3*time.Second, "max time to wait for a response before canceling the request")
-	root.Flags().StringVar(&urls, "urls", "./urls.txt", "simple .txt file with URL's to visit")
+	root.Flags().StringVar(&urls, "urls", "", "simple .txt file with URL's to visit. By default an embedded list will be used.")
 	root.Flags().BoolVarP(&verbose, "verbose", "v", false, "enables verbose mode")
 
 	return root

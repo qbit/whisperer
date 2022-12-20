@@ -1,14 +1,15 @@
 # Whisperer
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/danielkvist/whisperer)](https://goreportcard.com/report/github.com/danielkvist/whisperer)
-[![CircleCI](https://circleci.com/gh/danielkvist/whisperer.svg?style=svg)](https://circleci.com/gh/danielkvist/whisperer)
-[![GoDoc](https://godoc.org/github.com/danielkvist/whisperer?status.svg)](https://godoc.org/github.com/danielkvist/whisperer)
-[![Docker Pulls](https://img.shields.io/docker/pulls/danielkvist/whisperer.svg?maxAge=604800)](https://hub.docker.com/r/danielkvist/whisperer/)
+[![Go Report Card](https://goreportcard.com/badge/github.com/qbit/whisperer)](https://goreportcard.com/report/github.com/qbit/whisperer)
+[![CircleCI](https://circleci.com/gh/qbit/whisperer.svg?style=svg)](https://circleci.com/gh/qbit/whisperer)
+[![GoDoc](https://godoc.org/github.com/qbit/whisperer?status.svg)](https://godoc.org/github.com/qbit/whisperer)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 Whisperer is a simple Go program that makes HTTP request constantly in order to generate random HTTP/DNS traffic noise.
 
 > Whisperer is a project inspired by [Noisy](https://github.com/1tayH/noisy).
+
+This fork has an embedded urls.txt list and is intended to be run from GoKrazy images.
 
 ## Example
 
@@ -21,51 +22,20 @@ whisperer -v -d 3s
 ### Go
 
 ```bash
-go get github.com/danielkvist/whisperer
+go get github.com/qbit/whisperer
 ```
 
 ### Cloning the repository
 
 ```bash
 # First, clone the repository
-git clone https://github.com/danielkvist/whisperer
+git clone https://github.com/qbit/whisperer
 
 # Then navigate into the whisperer directory
 cd whisperer
 
 # Run
 go run main.go
-```
-
-## Docker
-
-### Pulling Image
-
-To use whisperer as a Docker container you can pull the image with the following command:
-
-```bash
-docker image pull danielkvist/whisperer
-```
-
-> Note that the image ```danielkvist/whisperer``` uses the urls file from this repository. So it is not a valid option if you want to customize the URLs that whisperer is going to visit.
-
-### Building Image
-
-```bash
-# First, clone the repository
-git clone https://github.com/danielkvist/whisperer
-
-# Then navigate into the whisperer directory
-cd whisperer
-
-# Modify the urls.txt file if you want
-vim urls.txt
-
-# Build the Docker Image from the Dockerfile inside the repository
-docker image build -t whisperer .
-
-# Run
-docker container run whisperer
 ```
 
 ## Options
@@ -96,8 +66,5 @@ Flags:
 
 This file is from which Whisperer will extract the different URLs that will be visiting.
 
-> You can see an example of how this file should be [here](https://github.com/danielkvist/whisperer/blob/master/urls.txt).
+> You can see an example of how this file should be [here](https://github.com/qbit/whisperer/blob/master/cmd/urls.txt).
 
-## Help is always welcome!
-
-If you know about anything else I can improve or add please, don't hesitate to let me know!

@@ -1,6 +1,6 @@
 package main
 
-import "github.com/danielkvist/whisperer/cmd"
+import "github.com/qbit/whisperer/cmd"
 
 func main() {
 	root := cmd.Root()
